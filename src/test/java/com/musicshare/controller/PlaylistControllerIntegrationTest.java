@@ -16,8 +16,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -56,7 +54,7 @@ class PlaylistControllerIntegrationTest {
                 .content(objectMapper.writeValueAsString(PlayListRequest.builder().playListId(playListAdded.getId()).songName("Toxic").build())))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.id").value(1L))
+                .andExpect(jsonPath("$.data.id").value(playListAdded.getId()))
                 .andExpect(jsonPath("$.data.name").value("playList1"))
                 .andExpect(jsonPath("$.data.songs.length()").value(1))
                 .andExpect(jsonPath("$.data.songs[0].name").value("Toxic"))
