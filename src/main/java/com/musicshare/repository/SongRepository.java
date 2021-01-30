@@ -1,4 +1,8 @@
 package com.musicshare.repository;
 
-public interface SongRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.musicshare.entity.Song;
+
+public interface SongRepository extends JpaRepository<Song, String> {
 }
