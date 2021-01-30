@@ -72,7 +72,7 @@ class PlaylistControllerTest {
     public void testAddSongToExistingPlayList() throws Exception {
         List<Song> songList = new ArrayList<>();
         songList.add(Song.builder().name("Titanic Song-1").build());
-        when(service.addSongsToPlaylist(any(), any())).thenReturn(Playlist.builder().name("playList1").id(1L).songs(songList).build());
+        when(service.addSongToPlaylist(any(), any())).thenReturn(Playlist.builder().name("playList1").id(1L).songs(songList).build());
 
         mockMvc.perform(put("/api/v1/playlist")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -85,7 +85,7 @@ class PlaylistControllerTest {
                 .andExpect(jsonPath("$.data.songs[0].name").value("Titanic Song-1"))
                 .andExpect(jsonPath("$.message").value("songs added to playlist successfully."));
 
-        verify(service, times(1)).addSongsToPlaylist(any(), any());
+        verify(service, times(1)).addSongToPlaylist(any(), any());
     }
 
     @Test
