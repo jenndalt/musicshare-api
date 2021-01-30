@@ -93,7 +93,7 @@ class PlaylistControllerTest {
     public void testRemoveSongFromExistingPlayList() throws Exception {
         List<Song> songList = new ArrayList<>();
         songList.add(Song.builder().name("Titanic Song-1").build());
-        when(service.removeSongFromPlaylist(any(), any())).thenReturn(Playlist.builder().name("playList1").id(1L).songs(songList).build());
+        when(service.removeSongFromPlaylist(anyLong(), anyString())).thenReturn(Playlist.builder().name("playList1").id(1L).songs(songList).build());
 
         mockMvc.perform(delete("/api/v1/playlist")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -106,6 +106,6 @@ class PlaylistControllerTest {
                 .andExpect(jsonPath("$.data.songs[0].name").value("Titanic Song-1"))
                 .andExpect(jsonPath("$.message").value("a song deleted from playlist successfully."));
 
-        verify(service, times(1)).removeSongFromPlaylist(any(), any());
+        verify(service, times(1)).removeSongFromPlaylist(anyLong(), anyString());
     }
 }
