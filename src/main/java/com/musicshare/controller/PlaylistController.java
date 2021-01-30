@@ -1,12 +1,12 @@
 package com.musicshare.controller;
 
-import com.musicshare.entity.Playlist;
 import com.musicshare.model.PlayListResponse;
 import com.musicshare.service.PlaylistService;
 import io.swagger.annotations.Api;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -20,13 +20,19 @@ public class PlaylistController {
         this.service = service;
     }
 
-    @PostMapping("/{playListName}")
-    public PlayListResponse createPlayList(@PathVariable String playListName) {
-
-        PlayListResponse response = PlayListResponse.builder()
-                .message("playlist created successfully.")
-                .data(service.createPlaylist(playListName))
-                .build();
+    @PostMapping
+    public PlayListResponse createPlayList(@RequestParam("playListName") String playListName) {
+        PlayListResponse response = null;
+        if (StringUtils.hasText(playListName)) {
+            response = PlayListResponse.builder()
+                    .message("playlist created successfully.")
+                    .data(service.createPlaylist(playListName))
+                    .build();
+        } else {
+            response = PlayListResponse.builder()
+                    .message("playlist name is required.")
+                    .build();
+        }
         return response;
     }
 }
