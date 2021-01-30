@@ -39,7 +39,7 @@ public class PlaylistController {
 
         return PlayListResponse.builder()
                 .message("songs added to playlist successfully.")
-                .data(service.addSongsToPlaylist(playListRequest.getPlayListId(), playListRequest.getSongName()))
+                .data(service.addSongToPlaylist(playListRequest.getPlayListId(), playListRequest.getSongName()))
                 .build();
     }
 
