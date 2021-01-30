@@ -4,9 +4,9 @@ import com.musicshare.model.PlayListResponse;
 import com.musicshare.service.PlaylistService;
 import io.swagger.annotations.Api;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -20,8 +20,8 @@ public class PlaylistController {
         this.service = service;
     }
 
-    @PostMapping
-    public PlayListResponse createPlayList(@RequestParam("playListName") String playListName) {
+    @PostMapping(value = {"/{playListName}", "/"})
+    public PlayListResponse createPlayList(@PathVariable(value = "playListName", required = false) String playListName) {
         PlayListResponse response = null;
         if (StringUtils.hasText(playListName)) {
             response = PlayListResponse.builder()
