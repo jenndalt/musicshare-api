@@ -21,8 +21,7 @@ public class PlaylistService {
     }
 
 	public Playlist addSongsToPlaylist(Long id, String name) throws Exception {
-		Playlist existingPlaylist = playlistRepository.findById(id)
-				.orElseThrow(() -> new Exception("playlist not found"));
+		Playlist existingPlaylist = playlistRepository.findById(id).get();
 		existingPlaylist.getSongs().add(new Song(name));
 		return playlistRepository.save(existingPlaylist);		
 		

@@ -3,8 +3,8 @@
 | PlaylistController                              | PlaylistService                            | PlaylistRepository |
 |-------------------------------------------------|--------------------------------------------|--------------------|
 | createPlaylist(playListName) (name - required)  | Playlist createPlaylist(playListName)      | save               |
-| addSong to Playlist (playlistId, songName)      | updatePlaylist  -> validate if song exists | save               |
-| deleteSong from playlist (playlistId, songName) | updatePlaylist -> validate if song exists  | save               |
+| addSong to Playlist (playlistId, songName)      | addSongToPlaylist  -> validate if song exists | save               |
+| deleteSong from playlist (playlistId, songName) | removeSongFromPlaylist -> validate if song exists  | save               |
 									
 
 - Open Question : can two playlists have same name ? 
