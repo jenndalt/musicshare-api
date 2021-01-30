@@ -67,11 +67,10 @@ class PlaylistServiceTest {
 		when(playlistRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(expectedPlaylist));
 
 		when(playlistRepository.save(Mockito.any(Playlist.class))).thenReturn(expectedPlaylist);
-		Playlist actualPlaylist = playlistService.addSongToPlaylist(1l, "Toxic");
+		Playlist actualPlaylist = playlistService.deleteSongFromPlaylist(1l, "Toxic");
 
 		assertEquals(expectedPlaylist.getName(), actualPlaylist.getName());
 		assertEquals(expectedPlaylist.getId(), actualPlaylist.getId());
-		assertFalse(actualPlaylist.getSongs().isEmpty());
-		assertEquals("Toxic",actualPlaylist.getSongs().get(0).getName());
+		assertTrue(actualPlaylist.getSongs().isEmpty());
 	}
 }

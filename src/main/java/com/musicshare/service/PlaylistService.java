@@ -9,20 +9,26 @@ import com.musicshare.repository.PlaylistRepository;
 @Service
 public class PlaylistService {
 
-    private PlaylistRepository playlistRepository;
+	private PlaylistRepository playlistRepository;
 
-    public PlaylistService(PlaylistRepository playlistRepository) {
-        this.playlistRepository = playlistRepository;
-    }
+	public PlaylistService(PlaylistRepository playlistRepository) {
+		this.playlistRepository = playlistRepository;
+	}
 
-    public Playlist createPlaylist(String playlistName) {
-        Playlist playlist = new Playlist(playlistName);
-        return playlistRepository.save(playlist);
-    }
+	public Playlist createPlaylist(String playlistName) {
+		Playlist playlist = new Playlist(playlistName);
+		return playlistRepository.save(playlist);
+	}
 
 	public Playlist addSongToPlaylist(Long id, String name) throws Exception {
 		Playlist existingPlaylist = playlistRepository.findById(id).get();
 		existingPlaylist.getSongs().add(new Song(name));
+		return playlistRepository.save(existingPlaylist);
+	}
+
+	public Playlist deleteSongFromPlaylist(long id, String name) {
+		Playlist existingPlaylist = playlistRepository.findById(id).get();
+		existingPlaylist.getSongs().remove(new Song(name));
 		return playlistRepository.save(existingPlaylist);
 	}
 
