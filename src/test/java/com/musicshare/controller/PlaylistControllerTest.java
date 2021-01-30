@@ -18,8 +18,7 @@ import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -87,5 +86,26 @@ class PlaylistControllerTest {
                 .andExpect(jsonPath("$.message").value("songs added to playlist successfully."));
 
         verify(service, times(1)).addSongsToPlaylist(any(), any());
+    }
+
+    @Test
+    @DisplayName("Remove one song from the existing playlist with two songs")
+    public void testRemoveSongFromExistingPlayList() throws Exception {
+        List<Song> songList = new ArrayList<>();
+        songList.add(Song.builder().name("Titanic Song-1").build());
+        when(service.removeSongFromPlaylist(any(), any())).thenReturn(Playlist.builder().name("playList1").id(1L).songs(songList).build());
+
+        mockMvc.perform(delete("/api/v1/playlist")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(PlayListRequest.builder().playListId(1L).songName("Titanic Song-2").build())))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data").exists())
+                .andExpect(jsonPath("$.data.id").value(1L))
+                .andExpect(jsonPath("$.data.name").value("playList1"))
+                .andExpect(jsonPath("$.data.songs.length()").value(1))
+                .andExpect(jsonPath("$.data.songs[0].name").value("Titanic Song-1"))
+                .andExpect(jsonPath("$.message").value("a song deleted from playlist successfully."));
+
+        verify(service, times(1)).removeSongFromPlaylist(any(), any());
     }
 }

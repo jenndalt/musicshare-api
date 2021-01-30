@@ -42,4 +42,13 @@ public class PlaylistController {
                 .data(service.addSongsToPlaylist(playListRequest.getPlayListId(), playListRequest.getSongName()))
                 .build();
     }
+
+    @DeleteMapping
+    public PlayListResponse deleteSongFromPlaylist(@RequestBody PlayListRequest playListRequest) throws Exception {
+
+        return PlayListResponse.builder()
+                .message("a song deleted from playlist successfully.")
+                .data(service.removeSongFromPlaylist(playListRequest.getPlayListId(), playListRequest.getSongName()))
+                .build();
+    }
 }
