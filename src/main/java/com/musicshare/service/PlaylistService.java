@@ -20,10 +20,10 @@ public class PlaylistService {
         return playlistRepository.save(playlist);
     }
 
-	public Playlist addSongsToPlaylist(Long id, String name) throws Exception {
+	public Playlist addSongToPlaylist(Long id, String name) throws Exception {
 		Playlist existingPlaylist = playlistRepository.findById(id).get();
 		existingPlaylist.getSongs().add(new Song(name));
-		return playlistRepository.save(existingPlaylist);		
-		
+		return playlistRepository.save(existingPlaylist);
 	}
+
 }
