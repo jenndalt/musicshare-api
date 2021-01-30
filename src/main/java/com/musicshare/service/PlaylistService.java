@@ -1,8 +1,10 @@
 package com.musicshare.service;
 
-import com.musicshare.entity.Playlist;
-import com.musicshare.repository.PlaylistRepository;
 import org.springframework.stereotype.Service;
+
+import com.musicshare.entity.Playlist;
+import com.musicshare.entity.Song;
+import com.musicshare.repository.PlaylistRepository;
 
 @Service
 public class PlaylistService {
@@ -14,7 +16,14 @@ public class PlaylistService {
     }
 
     public Playlist createPlaylist(String playlistName) {
-        Playlist playlist = Playlist.builder().name(playlistName).build();
+        Playlist playlist = new Playlist(playlistName);
         return playlistRepository.save(playlist);
     }
+
+	public Playlist addSongsToPlaylist(Long id, String name) throws Exception {
+		Playlist existingPlaylist = playlistRepository.findById(id).get();
+		existingPlaylist.getSongs().add(new Song(name));
+		return playlistRepository.save(existingPlaylist);		
+		
+	}
 }
