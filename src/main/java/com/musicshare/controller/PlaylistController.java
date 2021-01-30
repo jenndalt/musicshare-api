@@ -1,13 +1,11 @@
 package com.musicshare.controller;
 
+import com.musicshare.model.PlayListRequest;
 import com.musicshare.model.PlayListResponse;
 import com.musicshare.service.PlaylistService;
 import io.swagger.annotations.Api;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/playlist")
@@ -34,5 +32,14 @@ public class PlaylistController {
                     .build();
         }
         return response;
+    }
+
+    @PutMapping
+    public PlayListResponse addSongToPlaylist(@RequestBody PlayListRequest playListRequest) throws Exception {
+
+        return PlayListResponse.builder()
+                .message("songs added to playlist successfully.")
+                .data(service.addSongsToPlaylist(playListRequest.getPlayListId(), playListRequest.getSongName()))
+                .build();
     }
 }
