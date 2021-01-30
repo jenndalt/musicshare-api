@@ -26,12 +26,11 @@ public class PlaylistService {
 
 	public Playlist addSongToPlaylist(Long id, String name) throws Exception {
 		Playlist existingPlaylist = playlistRepository.findById(id).get();
-		validateIfSongExists(name);
 		existingPlaylist.getSongs().add(new Song(name));
 		return playlistRepository.save(existingPlaylist);
 	}
 
-	public Playlist deleteSongFromPlaylist(long id, String name) {
+	public Playlist removeSongFromPlaylist(long id, String name) {
 		Playlist existingPlaylist = playlistRepository.findById(id).get();
 		existingPlaylist.getSongs().remove(new Song(name));
 		return playlistRepository.save(existingPlaylist);
